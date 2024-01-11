@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout::head">
+    <meta charset="UTF-8">
+    <title>City list</title>
+</head>
+
+<body>
+<h3>Danh sách thành phố</h3>
+<p>
+    <a th:href="@{city/create}">
+        create new city
+    </a>
+</p>
+<div id="songs">
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>Thành phố</th>
+            <th>Quốc Gia</th>
+            <th>GDP</th>
+            <th>Dân Số</th>
+            <th>Diện tích</th>
+            <th>Hành động</th>
+        </tr>
+        <tr th:each="list : ${listCity}">
+            <td th:text="${list.id}" id="id"></td>
+            <td><a th:href="@{/city/{id}/info(id=${list.id})}">
+                <span th:text="${list.nameCity}"></span>
+            </a></td>
+            <td th:text="${list.nameCountry}"></td>
+            <td th:text="${list.GDP}"></td>
+            <td th:text="${list.population}"></td>
+            <td th:text="${list.square}"></td>
+            <td>
+                <a  th:href="@{/city/{id}/edit(id=${list.id})}">sửa</a>
+                <a id="Delete-link" >xóa</a>
+            </td>
+        </tr>
+
+        </script>
+        <div class="confirmation-dialog" id="confirmation-deleteW" style="display: none">
+            <div class="confirmation-dialog-content">
+                <h2>Confirm deletion</h2>
+                <p>Do you want to delete ?</p>
+                <button id="confirm-De">Yes</button>
+                <button id="cancel-De">Cancel</button>
+            </div>
+        </div>
+        <script>
+            const DeleteLink = document.getElementById('Delete-link');
+            const confirmationDelete = document.getElementById('confirmation-deleteW');
+            const confirmDelete = document.getElementById('confirm-De');
+            const cancelDelete = document.getElementById('cancel-De');
+            // const  id = document.getElementById('id')
+            let id = document.getElementById('id');
+
+            DeleteLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                confirmationDelete.style.display = 'block';
+            });
+            confirmDelete.addEventListener('click', function () {
+                confirmationDelete.style.display = 'none';
+                window.location.href =`city/${id.innerHTML}/delete`
+            });
+            cancelDelete.addEventListener('click', function () {
+                confirmationDelete.style.display = 'none';
+            });
+        </script>
+    </table>
+</div>
+<footer th:replace="/layout::footer"></footer>
+</body>
+</html>
