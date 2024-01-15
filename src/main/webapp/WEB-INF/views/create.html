@@ -39,6 +39,9 @@
             <input type="text" th:field="*{description}">
         </div>
         <input type="submit" value="save">
+        <p th:each="er : ${listERR}" style="color: red" th:text="${er.getDefaultMessage()}">
+
+        </p>
     </form>
 </div>
 <footer th:replace="/layout::footer"></footer>
